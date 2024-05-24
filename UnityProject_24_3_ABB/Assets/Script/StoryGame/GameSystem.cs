@@ -3,67 +3,97 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Text;
-using STORYGAME;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using Unity.VisualScripting;
 
-namespace STORYGAME
-{
 #if UNITY_EDITOR
-    [CustomEditor(typeof(GameSystem))]
-
-    public class GameSysteEditor : Editor
+[CustomEditor(typeof(GameSystem))]
+public class GameSystemEdiot : Editor
+{
+    public override void OnInspectorGUI()
     {
-        public override void OnInspectorGUI()
+        base.OnInspectorGUI();
+        GameSystem gameSystem = (GameSystem)target;
+
+        if(GUILayout.Button("Rest Stroy Modes"))
         {
-            base.OnInspectorGUI();
+            gameSystem.ResetStoryModels();
+        }
+    }
+}
+#endif
 
-            GameSystem gameSystem = (GameSystem)target;
+public class GameSystem : MonoBehaviour
+{
+    public static GameSystem instance;
 
-            if(GUILayout.Button("Reset Story Modes"))
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    public enum GAMESTATE
+    {
+        STORYSHOW,
+        WAITSELECT,
+        STORYEND
+    }
+
+    public Stats stats;
+    public GAMESTATE currentState;
+    public int currentStoryIndex = 1;
+    public StoryModel[] stroyModels; 
+
+  
+
+#if UNITY_EDITOR
+
+    
+    [ContextMenu("Reset Story Models")]
+    public void ResetStoryModels()
+    {
+        stroyModels = Resources.LoadAll<StoryModel>(""); 
+    }
+#endif
+
+    public void StoryShow(int number)
+    {
+        StoryModel tempStoryModels = FindStoryModel(number);
+
+        //StorySystem.Instace.currentStoryModel = tempStoryMoels;
+        //StorySystem.Instance.CoShowText();
+    }
+
+    StoryModel FindStoryModel(int number)
+    {
+        StoryModel tempStoryModels = null;
+        for(int i = 0; i < stroyModels.Length; i++)         // for 문으로 StroyModel 을 검색하여 Number 와 같은 스토리 번호로 스토리 모델을 찾아 반환한다.
+        {
+            if (stroyModels[i].storyNumber == number)
             {
-                gameSystem.ResetStroyModles();
+                tempStoryModels = stroyModels[i];
+                break;
             }
         }
+        return tempStoryModels;
     }
 
-
-#endif
-
-
-    public class GameSystem : MonoBehaviour
+    StoryModel RandomStory()
     {
-        public static GameSystem instance;
+        StoryModel tempStoryModels = null;
 
-        private void Awake()
+        List<StoryModel> storyModelList = new List<StoryModel>();
+
+        for (int i = 0; i < stroyModels.Length; i++)         // for 문으로 StroyModel 을 검색하여 Number 와 같은 스토리 번호로 스토리 모델을 찾아 반환한다.
         {
-            instance = this;
+            if (stroyModels[i].storyType == StoryModel.STORYTYPE.MAIN)
+            {
+                storyModelList.Add(stroyModels[i]);
+            }
         }
 
-        public enum GAMESTATE
-        {
-            SROTYSHOW,
-            WAITSELECT,
-            STORYEND,
-            BATTLEMODE,
-            BATTLEDONE,
-            SHOPMODE,
-            ENDMODE,
-        }
-
-        public GAMESTATE currentState;
-        public StoryTableObject[] storyModels;
-        public int currentStoryIndex = 1;
-
-#if UNITY_EDITOR
-        [ContextMenu("Reset Story Models")]
-
-        public void ResetStroyModles()
-        {
-            storyModels = Resources.LoadAll<StoryTableObject>("");
-        }
-
-
-
-#endif
+        tempStoryModels = storyModelList[Random.Range(0, storyModelList.Count)];
+        currentStoryIndex = tempStoryModels.storyNumber;
+        return tempStoryModels;
     }
-
 }

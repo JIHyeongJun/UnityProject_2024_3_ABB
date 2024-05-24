@@ -2,41 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace STORYGAME
+public class Enums
 {
-    public class Enums
+    public enum StoryType // 스토리 타입
     {
-        public enum StoryType
-        {
-            MAIN,
-            SUB,
-            SERIAL
-        }
-
-        public enum EvenType
-        {
-            NONE,
-            GoToBattle = 100,
-            CheckSTR = 1000,
-            CheckDEX,
-            CheckCON,
-            CheckINT,
-            CheckWIS,
-            CheckCHA
-        }
-
-        public enum ResultType
-        {
-            ChangeHp,
-            ChangeSp,
-            AddExperience,
-            GoToShop,
-            GoToNextStory,
-            GoToRandomStory,
-            GoToEnding
-        }
+        MAIN,
+        SUB,
+        SERIAL
 
     }
+
+    public enum EventType // 이벤트 발생 시 체크
+    {
+        NONE,
+        GOTOBATTLE = 100,
+        CheckSTR = 1000,
+
+    }
+
+    public enum ResultType    //이벤트 결과 열거
+    {
+        AddExperience,
+        GoToNextSotry,
+        GoToRandoemStory
+
+    }
+
 }
 
 [System.Serializable]
@@ -52,10 +43,8 @@ public class Stats
 
     public int strength;
     public int dexterity;
-    public int consitiution;
+    public int consitution;
     public int Intelligence;
     public int wisdom;
-    public int charisma;        
+    public int charisma;
 }
-
-
