@@ -24,7 +24,7 @@ public class Enums
     {
         AddExperience,
         GoToNextSotry,
-        GoToRandoemStory
+        GoToRandomStory
 
     }
 
