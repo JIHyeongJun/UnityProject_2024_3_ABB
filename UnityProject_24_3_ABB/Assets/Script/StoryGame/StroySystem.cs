@@ -36,7 +36,18 @@ public class StorySystem : MonoBehaviour
 
     public void OnwayClick(int index)
     {
+        bool CheckEventTypeNone = false;
+        StoryModel playStoryModel = currentStoryModel;
+        Debug.Log(index);
 
+        if(playStoryModel.options[index].eventCheck.eventType == StoryModel.EventCheck.EventType.NONE)
+        {
+            for(int i = 0; i < playStoryModel.options[index].eventCheck.sucessResult.Length; i++)
+            {
+                GameSystem.instance.ApplyChoice(currentStoryModel.options[index].eventCheck.sucessResult[i]);
+                CheckEventTypeNone = true;
+            }
+        }
 
     }
 
@@ -51,6 +62,15 @@ public class StorySystem : MonoBehaviour
             buttonWay[i].onClick.AddListener(() => OnwayClick(wayIndex));
 
         }
+
+        CoShowText();
+    }
+
+    public void CoShowText()
+    {
+        StoryModelInt ();
+        ResetShow();
+        StartCoroutine(ShowText());
     }
 
     public void StoryModelInt()
@@ -74,6 +94,8 @@ public class StorySystem : MonoBehaviour
             buttonWay[i].gameObject.SetActive(false);
         }
     }
+
+   
 
     IEnumerator ShowText()
     {
