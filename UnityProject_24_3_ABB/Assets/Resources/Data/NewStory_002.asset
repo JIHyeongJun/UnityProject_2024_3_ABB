@@ -42,6 +42,34 @@ MonoBehaviour:
           Intelligence: 0
           wisdom: 0
           charisma: 0
+      - resultType: 4
+        value: 1
+        stats:
+          hpPoint: 0
+          spPoint: 0
+          currentHpPoint: 0
+          currentSpPoint: 0
+          currentXpPoint: 0
+          strength: 0
+          dexterity: 0
+          consitution: 0
+          Intelligence: 0
+          wisdom: 0
+          charisma: 0
+      - resultType: 4
+        value: 1
+        stats:
+          hpPoint: 0
+          spPoint: 0
+          currentHpPoint: 0
+          currentSpPoint: 0
+          currentXpPoint: 0
+          strength: 0
+          dexterity: 0
+          consitution: 0
+          Intelligence: 0
+          wisdom: 0
+          charisma: 0
       failResult:
       - resultType: 0
         value: 0

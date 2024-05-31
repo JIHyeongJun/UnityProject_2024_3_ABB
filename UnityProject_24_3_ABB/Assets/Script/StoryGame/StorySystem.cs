@@ -44,8 +44,16 @@ public class StorySystem : MonoBehaviour
         {
             for(int i = 0; i < playStoryModel.options[index].eventCheck.sucessResult.Length; i++)
             {
-                GameSystem.instance.ApplyChoice(currentStoryModel.options[index].eventCheck.sucessResult[i]);
-                CheckEventTypeNone = true;
+                try
+                {
+                    GameSystem.instance.ApplyChoice(currentStoryModel.options[index].eventCheck.sucessResult[i]);
+                    CheckEventTypeNone = true;
+                }
+                catch
+                {
+                    Debug.LogError(" Err : " + index + " i " + i);
+                }
+               
             }
         }
 
