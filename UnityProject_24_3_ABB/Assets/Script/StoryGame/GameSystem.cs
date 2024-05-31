@@ -127,8 +127,8 @@ public class GameSystem : MonoBehaviour
     {
         StoryModel tempStoryModels = FindStoryModel(number);
 
-        //StorySystem.Instace.currentStoryModel = tempStoryMoels;
-        //StorySystem.Instance.CoShowText();
+        StorySystem.instance.currentStoryModel = tempStoryModels;
+        StorySystem.instance.CoShowText();
     }
 
     StoryModel FindStoryModel(int number)
